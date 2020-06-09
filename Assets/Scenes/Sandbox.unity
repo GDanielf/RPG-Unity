@@ -893,7 +893,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.3147425, y: 0.39273724, z: -0.14510977, w: 0.8518438}
-  m_LocalPosition: {x: -9.38, y: 12.64, z: -9.25}
+  m_LocalPosition: {x: -3.85, y: 5.66, z: -3.08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1282122563}
@@ -1506,6 +1506,41 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5901365193861240259, guid: 77f0af1a3f12b5847939483448a33518,
+        type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 309854278}
+    - target: {fileID: 5901365193861240261, guid: 77f0af1a3f12b5847939483448a33518,
+        type: 3}
+      propertyPath: m_Speed
+      value: 5.66
+      objectReference: {fileID: 0}
+    - target: {fileID: 5901365193861240261, guid: 77f0af1a3f12b5847939483448a33518,
+        type: 3}
+      propertyPath: m_AngularSpeed
+      value: 479
+      objectReference: {fileID: 0}
+    - target: {fileID: 5901365193861240261, guid: 77f0af1a3f12b5847939483448a33518,
+        type: 3}
+      propertyPath: m_Acceleration
+      value: 44.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 5901365194777429818, guid: 77f0af1a3f12b5847939483448a33518,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5901365194777429818, guid: 77f0af1a3f12b5847939483448a33518,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5901365194777429818, guid: 77f0af1a3f12b5847939483448a33518,
+        type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6276796817100988133, guid: 77f0af1a3f12b5847939483448a33518,
         type: 3}
       propertyPath: m_Name
@@ -1519,7 +1554,7 @@ PrefabInstance:
     - target: {fileID: 6886198707304789529, guid: 77f0af1a3f12b5847939483448a33518,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: 6886198707304789529, guid: 77f0af1a3f12b5847939483448a33518,
         type: 3}
@@ -1574,44 +1609,28 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5901365193861240257}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5901365193861240259
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5901365193861240258}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b03f712bd6351ea4684e280d40c7da83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 309854278}
 --- !u!4 &5901365193861240260 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6886198707304789529, guid: 77f0af1a3f12b5847939483448a33518,
     type: 3}
   m_PrefabInstance: {fileID: 5901365193861240257}
   m_PrefabAsset: {fileID: 0}
---- !u!195 &5901365193861240261
-NavMeshAgent:
+--- !u!95 &5901365193861240263
+Animator:
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5901365193861240258}
   m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 16
-  m_Acceleration: 15
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 1
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_Avatar: {fileID: 9000000, guid: d288a0e4a2d923b46898986e979da643, type: 3}
+  m_Controller: {fileID: 9100000, guid: 4fd60dce809501d4cb127c0956219fd7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
