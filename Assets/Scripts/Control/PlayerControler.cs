@@ -31,7 +31,7 @@ using RPG.Movement;
             bool HasHit = Physics.Raycast(GetMouseRay(), out hit);
             if(HasHit){
                 if(Input.GetMouseButton(0)){
-                    GetComponent<Mover>().MoveTo(hit.point);
+                    GetComponent<Mover>().StartMoveAction(hit.point);
                 }
                 return true;
             }
