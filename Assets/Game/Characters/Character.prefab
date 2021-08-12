@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5901365193861240263}
   - component: {fileID: 3656718666596236430}
   - component: {fileID: 5901365193861240266}
+  - component: {fileID: -8065413628191119655}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -47,10 +48,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -75,6 +78,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &5901365193861240259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,6 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  maxSpeed: 6
 --- !u!195 &5901365193861240261
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -156,3 +161,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d21f5aa65ab88f74cb4947dd4069982c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-8065413628191119655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6276796817100988133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ea9374b509b70f4bba37e4a2ca8cf00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueIdentifier: 

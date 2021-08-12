@@ -4,9 +4,10 @@ using UnityEngine;
 using UnityEngine.AI;
 using RPG.Core;
 using RPG.Combat;
+using RPG.Saving;
 
 namespace RPG.Movement{
-        public class Mover : MonoBehaviour, IAction
+        public class Mover : MonoBehaviour, IAction, ISaveable
     {
         [SerializeField] Transform target;
         [SerializeField] float maxSpeed = 6f;
@@ -51,6 +52,23 @@ namespace RPG.Movement{
             navMeshAgent.isStopped = false;            
         }
 
-        
+        public object CaptureState()
+        {
+            //this can throw an exception, the other way of casting is like: transform.position as SerializableVector3, this returns a null, so you just have to check with if before using
+            //return new SerializableVector3(transform.position);
+            Dictionary<string, object> data = new Dictionary<string, object>();            
+            data["position"] = new SerializableVector3(transform.position);
+            data["rotation"] = new SerializableVector3(transform.eulerAngles);
+            return data;
+        }
+
+        public void RestoreState(object state)
+        {
+            Dictionary<string, object> data = (Dictionary<string, object>)state;            
+            GetComponent<NavMeshAgent>().enabled = false;
+            transform.position = ((SerializableVector3)data["position"]).ToVector();
+            transform.eulerAngles = ((SerializableVector3)data["rotation"]).ToVector();
+            GetComponent<NavMeshAgent>().enabled = true;
+        }
     }
 }
