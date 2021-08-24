@@ -1,16 +1,14 @@
-﻿
-using System;
-using RPG.Combat;
+﻿using RPG.Combat;
 using UnityEngine;
 using RPG.Movement;
-using RPG.Core;
+using RPG.Attributes;
 
 namespace RPG.Control 
 {
     public class PlayerControler : MonoBehaviour
     {
         Health health;
-        private void Start()
+        private void Awake()
         {
             health = GetComponent<Health>();
         }

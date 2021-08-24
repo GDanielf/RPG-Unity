@@ -1,9 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using RPG.Movement;
 using RPG.Combat;
 using RPG.Core;
+using RPG.Attributes;
+using GameDevTV.Utils;
 using System;
 
 namespace RPG.Control 
@@ -17,30 +17,38 @@ namespace RPG.Control
         [SerializeField] float waypointStayTime = 1f;
         [Range(0,1)]
         [SerializeField] float patrolSpeedFraction = 0.2f;
-        
+
         Mover mover;
         Fighter fighter;
         GameObject player;
         Health health;
         ActionSchedule actionSchedule;
         
-        Vector3 guardPosition;
         float timeSinceLastSawPlayer = Mathf.Infinity;
         float timeSinceLastWaypoint = Mathf.Infinity;
         int currentWaypointIndex = 0;
 
-        private void Start()
+        LazyValue<Vector3> guardPosition;
+
+        private void Awake()
         {
             mover = GetComponent<Mover>();
             fighter = GetComponent<Fighter>();
             health = GetComponent<Health>();
             actionSchedule = GetComponent<ActionSchedule>();
-            
-
             player = GameObject.FindWithTag("Player");
 
-            guardPosition = transform.position;
-            
+            guardPosition = new LazyValue<Vector3>(GetGuardPosition);
+        }
+
+        private Vector3 GetGuardPosition()
+        {
+            return transform.position;
+        }
+
+        private void Start()
+        {
+            guardPosition.ForceInit();           
         }
 
         private void Update()
@@ -70,7 +78,7 @@ namespace RPG.Control
 
         private void PatrolBehaviour()
         {
-            Vector3 nextPosition = guardPosition;
+            Vector3 nextPosition = guardPosition.value;
 
             if(patrolPath != null)
             {
@@ -116,7 +124,7 @@ namespace RPG.Control
         }
 
         private bool DistanceToPlayer(GameObject player)
-        {
+        {            
             float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
             return distanceToPlayer < chaseDistance;            
         }

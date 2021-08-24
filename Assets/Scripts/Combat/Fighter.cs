@@ -1,25 +1,41 @@
 ﻿using UnityEngine;
 using RPG.Movement;
+using RPG.Saving;
+using RPG.Attributes;
 using RPG.Core;
-using System;
+using RPG.Stats;
+using System.Collections.Generic;
+using GameDevTV.Utils;
+
 
 namespace RPG.Combat{
-    public class Fighter : MonoBehaviour, IAction
-    {
-        [SerializeField] float weaponRange = 2f;
-        [SerializeField] float timeBetweenAttacks = 1f;
-        [SerializeField] float weaponDamage = 10f;
+    public class Fighter : MonoBehaviour, IAction, ISaveable, IModifierProvider
+    {        
+        [SerializeField] float timeBetweenAttacks = 1f;        
+        [SerializeField] Transform rightHand = null;
+        [SerializeField] Transform leftHand = null;
+        [SerializeField] Weapon defaultWeapon = null;
 
         Health target;
-        Animator attackAnimat;
-
         float timeLastAtack = 0;
+        LazyValue<Weapon> currentWeapon;
+
+        private void Awake()
+        {
+            currentWeapon = new LazyValue<Weapon>(SetupDefaultWeapon);
+        }
+
+        private Weapon SetupDefaultWeapon()
+        {
+            AttachWeapon(defaultWeapon);
+            return defaultWeapon;
+        }
 
         private void Start()
         {
-            attackAnimat = GetComponent<Animator>();
-            attackAnimat.ResetTrigger("attack");
+            currentWeapon.ForceInit();          
         }
+        
 
         private void Update()
         {
@@ -38,6 +54,23 @@ namespace RPG.Combat{
                 GetComponent<Mover>().Cancel();
                 AttackBehaviour();
             }
+        }
+
+        public void EquipWeapon(Weapon weapon)
+        {
+            currentWeapon.value = weapon;
+            AttachWeapon(weapon);
+        }
+
+        private void AttachWeapon(Weapon weapon)
+        {
+            Animator animator = GetComponent<Animator>();
+            weapon.Spawn(rightHand, leftHand, animator);
+        }
+
+        public Health GetTarget()
+        {
+            return target;
         }
 
         public bool CanAttack(GameObject combatTarget)
@@ -60,20 +93,35 @@ namespace RPG.Combat{
 
         private void TriggerAttack()
         {
-            attackAnimat.SetTrigger("attack");
+            GetComponent<Animator>().SetTrigger("attack");
             GetComponent<Animator>().ResetTrigger("stopAttack");
         }
 
-        //Animation
+        //Animation 
         void Hit()
         {
-            if(target == null) { return; }
-            target.TakeDamage(weaponDamage);
+            float damage = GetComponent<BaseStats>().GetStat(Stat.Damage); 
+            
+            if (target == null) { return; }
+            if (currentWeapon.value.HasProjectile())
+            {
+                currentWeapon.value.LaunchProjectile(rightHand, leftHand, target, gameObject, damage);
+            }
+            else
+            {                
+                target.TakeDamage(gameObject, damage);
+            }
+            
         }
 
-        private bool GetIsInRange()
+        void Shoot()
         {
-            return Vector3.Distance(transform.position, target.transform.position) < weaponRange;
+            Hit();
+        }
+
+        public bool GetIsInRange()
+        {
+            return Vector3.Distance(transform.position, target.transform.position) < currentWeapon.value.GetWeaponRange();
         }
 
         public void Attack(GameObject combatTarget)
@@ -94,5 +142,38 @@ namespace RPG.Combat{
             GetComponent<Animator>().SetTrigger("stopAttack");
             GetComponent<Animator>().ResetTrigger("attack");
         }
+
+        //Additive and perrcentage bonus statements
+        public IEnumerable<float> GetAdditiveModifiers(Stat stat)
+        {
+            if(stat == Stat.Damage)
+            {
+                yield return currentWeapon.value.GetWeaponDamage();  
+            }
+            
+        }
+
+        public IEnumerable<float> GetPercentageModifiers(Stat stat)
+        {
+            if (stat == Stat.Damage)
+            {
+                yield return currentWeapon.value.GetPercentageBonus();
+            }
+        }
+
+
+        //Save statement
+        public object CaptureState()
+        {
+            return currentWeapon.value.name;
+        }
+
+        public void RestoreState(object state)
+        {
+            string weaponName = (string)state;
+            Weapon weapon = Resources.Load<Weapon>(weaponName);
+            EquipWeapon(weapon);
+        }
+        
     }
 }

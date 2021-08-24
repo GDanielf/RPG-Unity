@@ -29,7 +29,6 @@ namespace RPG.Cinematic
         {
             bool playedState = (bool)state;
             playedState = isPlayed;
-            if (isPlayed == false) isPlayed = true; 
         }
     }
 }

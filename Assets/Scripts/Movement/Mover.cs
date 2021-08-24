@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using RPG.Core;
-using RPG.Combat;
 using RPG.Saving;
+using RPG.Attributes;
 
 namespace RPG.Movement{
         public class Mover : MonoBehaviour, IAction, ISaveable
@@ -14,7 +13,7 @@ namespace RPG.Movement{
 
         NavMeshAgent navMeshAgent;
         Health health;
-        private void Start()
+        private void Awake()
         {
             health = GetComponent<Health>();
             navMeshAgent = GetComponent<NavMeshAgent>();
@@ -65,10 +64,10 @@ namespace RPG.Movement{
         public void RestoreState(object state)
         {
             Dictionary<string, object> data = (Dictionary<string, object>)state;            
-            GetComponent<NavMeshAgent>().enabled = false;
+            navMeshAgent.enabled = false;
             transform.position = ((SerializableVector3)data["position"]).ToVector();
             transform.eulerAngles = ((SerializableVector3)data["rotation"]).ToVector();
-            GetComponent<NavMeshAgent>().enabled = true;
+            navMeshAgent.enabled = true;
         }
     }
 }
