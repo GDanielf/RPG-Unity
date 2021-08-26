@@ -22,7 +22,7 @@ namespace RPG.Combat
                 return;
             }
             Health health = fighter.GetTarget();//deve checar qual o inimigo em cada frame
-            GetComponent<Text>().text = String.Format("{0:0}%", health.GetPercentage());
+            GetComponent<Text>().text = String.Format("{0:0}/{1:0}", health.GetHealthPoints(), health.GetMaxHealthPoints());
             
         }
 

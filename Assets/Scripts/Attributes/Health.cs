@@ -72,12 +72,9 @@ namespace RPG.Attributes
         private void AwardExperience(GameObject instigator)
         {
             Experience experience = instigator.GetComponent<Experience>();
-            float expReward = gameObject.GetComponent<BaseStats>().GetStat(Stat.ExperienceReward);
-            if (experience != null)
-            {
-                experience.GainExperience(expReward);
-            }
-            else return;
+            if (experience == null) return;
+
+            experience.GainExperience(GetComponent<BaseStats>().GetStat(Stat.ExperienceReward));        
         }
 
         private void GainHpOnLevelUP()
