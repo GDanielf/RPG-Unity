@@ -51,7 +51,7 @@ namespace RPG.Attributes
             print(gameObject.name + " took damage: " + damage);
 
             healthPoints.value = Mathf.Max(healthPoints.value - damage, 0);
-            print(healthPoints);
+            print(healthPoints.value);
             if (healthPoints.value == 0)
             {
                 Die();
@@ -103,14 +103,13 @@ namespace RPG.Attributes
         //save-load state
         public object CaptureState()
         {
-            return healthPoints;
+            return healthPoints.value;
         }
 
         public void RestoreState(object state)
         {
-            float healthState = (float)state;
-            healthPoints.value = healthState;
-            if(healthPoints.value == 0)
+            healthPoints.value = (float)state;            
+            if(healthPoints.value <= 0)
             {
                 Die();
             }

@@ -100,9 +100,11 @@ namespace RPG.Combat{
         //Animation 
         void Hit()
         {
+
+            if (target == null) { return; }
+
             float damage = GetComponent<BaseStats>().GetStat(Stat.Damage); 
             
-            if (target == null) { return; }
             if (currentWeapon.value.HasProjectile())
             {
                 currentWeapon.value.LaunchProjectile(rightHand, leftHand, target, gameObject, damage);
@@ -171,7 +173,7 @@ namespace RPG.Combat{
         public void RestoreState(object state)
         {
             string weaponName = (string)state;
-            Weapon weapon = Resources.Load<Weapon>(weaponName);
+            Weapon weapon = UnityEngine.Resources.Load<Weapon>(weaponName);
             EquipWeapon(weapon);
         }
         

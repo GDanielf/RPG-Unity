@@ -78,6 +78,7 @@ namespace RPG.Stats
 
         public int GetLevel()
         {
+            
             return currentLevel.value;
         }
 

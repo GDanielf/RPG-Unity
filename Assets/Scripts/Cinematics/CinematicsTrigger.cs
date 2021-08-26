@@ -6,7 +6,7 @@ using UnityEngine.Playables;
 
 namespace RPG.Cinematic 
 {
-    public class CinematicsTrigger : MonoBehaviour, ISaveable
+    public class CinematicsTrigger : MonoBehaviour
     {
         bool isPlayed = false;
 
@@ -17,18 +17,6 @@ namespace RPG.Cinematic
                 GetComponent<PlayableDirector>().Play();
                 isPlayed = true;
             }                
-        }
-
-        //save-load state
-        public object CaptureState()
-        {
-            return isPlayed;
-        }
-
-        public void RestoreState(object state)
-        {
-            bool playedState = (bool)state;
-            playedState = isPlayed;
         }
     }
 }

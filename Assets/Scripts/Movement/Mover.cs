@@ -53,21 +53,16 @@ namespace RPG.Movement{
 
         public object CaptureState()
         {
-            //this can throw an exception, the other way of casting is like: transform.position as SerializableVector3, this returns a null, so you just have to check with if before using
-            //return new SerializableVector3(transform.position);
-            Dictionary<string, object> data = new Dictionary<string, object>();            
-            data["position"] = new SerializableVector3(transform.position);
-            data["rotation"] = new SerializableVector3(transform.eulerAngles);
-            return data;
+            return new SerializableVector3(transform.position);
         }
 
         public void RestoreState(object state)
         {
-            Dictionary<string, object> data = (Dictionary<string, object>)state;            
+            SerializableVector3 position = (SerializableVector3)state;
             navMeshAgent.enabled = false;
-            transform.position = ((SerializableVector3)data["position"]).ToVector();
-            transform.eulerAngles = ((SerializableVector3)data["rotation"]).ToVector();
+            transform.position = position.ToVector();
             navMeshAgent.enabled = true;
+            GetComponent<ActionSchedule>().CancelCurrentAction();
         }
     }
 }
