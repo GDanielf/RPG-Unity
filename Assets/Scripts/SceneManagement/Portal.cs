@@ -1,3 +1,4 @@
+using RPG.Control;
 using RPG.Saving;
 using System;
 using System.Collections;
@@ -9,6 +10,7 @@ namespace RPG.SceneManagement
 {
     public class Portal : MonoBehaviour
     {
+        
         enum DestinationIdentifier
         {
             A, B, C, D, E
@@ -27,8 +29,6 @@ namespace RPG.SceneManagement
             if (other.tag == "Player")
             {
                 StartCoroutine(Transition());
-                print("player: " + other.transform.position);
-                print("spawn: " + spawnPoint.transform.position);
             }
         }
 
@@ -40,17 +40,21 @@ namespace RPG.SceneManagement
                 yield break;
             }
 
-            //transform.parent = null;
             DontDestroyOnLoad(gameObject);
 
-            Fader fader = FindObjectOfType<Fader>();            
-            
-            yield return fader.FadeOut(fadeOutTime);
-            //save current world
+            Fader fader = FindObjectOfType<Fader>();
             SavingWrapper wrapper = FindObjectOfType<SavingWrapper>();
+            PlayerControler playerControl = GameObject.FindWithTag("Player").GetComponent<PlayerControler>();
+            playerControl.enabled = false;
+
+            yield return fader.FadeOut(fadeOutTime);
             wrapper.Save();
+
             yield return SceneManager.LoadSceneAsync(sceneToLoad);
-            //load current world
+
+            PlayerControler newPlayerControl = GameObject.FindWithTag("Player").GetComponent<PlayerControler>();
+            newPlayerControl.enabled = false;
+            
             wrapper.Load();
 
             Portal otherPortal = GetOtherPortal();            
@@ -59,8 +63,9 @@ namespace RPG.SceneManagement
             wrapper.Save();
 
             yield return new WaitForSeconds(fadeWaitTime);
-            yield return fader.FadeIn(fadeInTime);
+            fader.FadeIn(fadeInTime);
 
+            newPlayerControl.enabled = true;
             Destroy(gameObject);
         }
 
