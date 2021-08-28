@@ -41,7 +41,7 @@ MonoBehaviour:
     - stat: 0
       levels:
       - 30
-      - 60
+      - 80
     - stat: 1
       levels:
       - 15

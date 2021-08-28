@@ -97,5 +97,6 @@ PrefabInstance:
       propertyPath: shouldUseModifiers
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1650184106, guid: 44351ec4373a7a3499ea3e738251468a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 44351ec4373a7a3499ea3e738251468a, type: 3}
